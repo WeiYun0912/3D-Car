@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Ground from "./components/Ground";
 import Car from "./components/Car";
 import "./style.css";
+import CanvasLoader from "./components/Loader";
 
 const CarShow = () => {
   return (
@@ -42,11 +43,11 @@ const CarShow = () => {
 
 const App = () => {
   return (
-    <Suspense fallback={null}>
-      <Canvas shadows>
+    <Canvas shadows>
+      <Suspense fallback={<CanvasLoader />}>
         <CarShow />
-      </Canvas>
-    </Suspense>
+      </Suspense>
+    </Canvas>
   );
 };
 

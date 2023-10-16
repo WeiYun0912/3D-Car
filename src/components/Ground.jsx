@@ -1,5 +1,5 @@
 import { MeshReflectorMaterial } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { useEffect } from "react";
 import { NoColorSpace, RepeatWrapping, TextureLoader } from "three";
 
@@ -8,8 +8,6 @@ const Ground = () => {
     "textures/terrain-roughness.jpg",
     "textures/terrain-normal.jpg",
   ]);
-
-  console.log(roughness);
 
   useEffect(() => {
     [normal, roughness].forEach((t) => {
@@ -21,6 +19,12 @@ const Ground = () => {
 
     normal.colorSpace = NoColorSpace;
   }, [normal, roughness]);
+
+  useFrame((state) => {
+    let t = -state.clock.getElapsedTime() * 0.5;
+    roughness.offset.set(0, t);
+    normal.offset.set(0, t);
+  });
 
   return (
     <mesh rotation-x={-Math.PI * 0.5} castShadow receiveShadow>
